@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'kategori_page.dart';
 import 'package:kelaskita_mobile/widgets/custom_buttom_navbar.dart';
 
 class HomePage extends StatelessWidget {
@@ -38,9 +39,9 @@ class HomePage extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
-                          Text("Hello,", style: TextStyle(color: Colors.grey)),
+                          Text("Hello!,", style: TextStyle(color: Colors.grey)),
                           Text(
-                            "Alex Johnson!",
+                            "Aliq Nur Shiddiq!",
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -159,15 +160,28 @@ class HomePage extends StatelessWidget {
               // CATEGORIES TITLE
               // =======================
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    "Categories",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  Text("See All", style: TextStyle(color: Colors.grey)),
-                ],
-              ),
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    const Text(
+      "Categories",
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    ),
+
+    GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const CategoriesPage()),
+        );
+      },
+      child: const Text(
+        "See All",
+        style: TextStyle(color: Colors.grey),
+      ),
+    ),
+  ],
+),
+
 
               const SizedBox(height: 12),
 
