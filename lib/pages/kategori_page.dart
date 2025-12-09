@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kelaskita_mobile/widgets/custom_buttom_navbar.dart';
+import 'home_page.dart';
+import 'my_courses_page.dart';
+import 'schedule_page.dart';
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});
@@ -11,7 +14,24 @@ class CategoriesPage extends StatelessWidget {
 
       bottomNavigationBar: CustomBottomNavbar(
         currentIndex: 1, // Explore tab
-        onTap: (i) {},
+        onTap: (i) {
+          if (i == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          } else if (i == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MyCoursesPage()),
+            );
+          } else if (i == 3) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const SchedulePage()),
+            );
+          }
+        },
       ),
 
       body: SafeArea(
@@ -20,7 +40,6 @@ class CategoriesPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               // ====================================================
               // HEADER: Back Button + Title + Filter Icon
               // ====================================================
@@ -47,7 +66,7 @@ class CategoriesPage extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.filter_list),
                     onPressed: () {},
-                  )
+                  ),
                 ],
               ),
 
@@ -154,7 +173,7 @@ Widget _courseListCard({
       borderRadius: BorderRadius.circular(24),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.05),
+          color: Colors.black.withValues(alpha: 0.05),
           blurRadius: 8,
           offset: const Offset(0, 3),
         ),
@@ -196,8 +215,11 @@ Widget _courseListCard({
               // MENTOR
               Row(
                 children: [
-                  const Icon(Icons.person_outline,
-                      size: 14, color: Colors.grey),
+                  const Icon(
+                    Icons.person_outline,
+                    size: 14,
+                    color: Colors.grey,
+                  ),
                   const SizedBox(width: 5),
                   Text(
                     mentor,
@@ -216,7 +238,9 @@ Widget _courseListCard({
                   Text(
                     rating.toString(),
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 13),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
                   ),
                   const SizedBox(width: 8),
                   Text(

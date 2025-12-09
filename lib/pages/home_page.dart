@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'kategori_page.dart';
 import 'package:kelaskita_mobile/widgets/custom_buttom_navbar.dart';
+import 'kategori_page.dart';
+import 'my_courses_page.dart';
+import 'schedule_page.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,7 +15,24 @@ class HomePage extends StatelessWidget {
 
       bottomNavigationBar: CustomBottomNavbar(
         currentIndex: 0,
-        onTap: (i) {},
+        onTap: (i) {
+          if (i == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MyCoursesPage()),
+            );
+          } else if (i == 3) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const SchedulePage()),
+            );
+          } else if (i == 4) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
+            );
+          }
+        },
       ),
 
       body: SafeArea(
@@ -21,7 +41,6 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               // =======================
               // HEADER
               // =======================
@@ -104,10 +123,12 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.25),
+                        color: Colors.white.withValues(alpha: 0.25),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Text(
@@ -121,9 +142,10 @@ class HomePage extends StatelessWidget {
                     const Text(
                       "50% OFF Today",
                       style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
 
                     const SizedBox(height: 8),
@@ -160,28 +182,29 @@ class HomePage extends StatelessWidget {
               // CATEGORIES TITLE
               // =======================
               Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    const Text(
-      "Categories",
-      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-    ),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Categories",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
 
-    GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const CategoriesPage()),
-        );
-      },
-      child: const Text(
-        "See All",
-        style: TextStyle(color: Colors.grey),
-      ),
-    ),
-  ],
-),
-
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const CategoriesPage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "See All",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ],
+              ),
 
               const SizedBox(height: 12),
 
@@ -289,7 +312,7 @@ Widget _courseCard({
       borderRadius: BorderRadius.circular(24),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.05),
+          color: Colors.black.withValues(alpha: 0.05),
           blurRadius: 8,
           offset: const Offset(0, 3),
         ),
@@ -298,7 +321,6 @@ Widget _courseCard({
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        
         // IMAGE + PRICE BADGE
         Stack(
           children: [
@@ -320,8 +342,10 @@ Widget _courseCard({
               top: 10,
               right: 10,
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFF1565C0),
                   borderRadius: BorderRadius.circular(12),
@@ -345,7 +369,6 @@ Widget _courseCard({
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               // TITLE
               Text(
                 title,
@@ -362,15 +385,15 @@ Widget _courseCard({
               // MENTOR NAME
               Row(
                 children: [
-                  const Icon(Icons.person_outline,
-                      size: 14, color: Colors.grey),
+                  const Icon(
+                    Icons.person_outline,
+                    size: 14,
+                    color: Colors.grey,
+                  ),
                   const SizedBox(width: 5),
                   Text(
                     mentor,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Colors.grey,
-                    ),
+                    style: const TextStyle(fontSize: 13, color: Colors.grey),
                   ),
                 ],
               ),
@@ -392,10 +415,7 @@ Widget _courseCard({
                   const SizedBox(width: 8),
                   Text(
                     "|  $students students",
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ],
               ),
