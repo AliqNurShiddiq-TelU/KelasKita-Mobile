@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kelaskita_mobile/widgets/custom_buttom_navbar.dart';
 import 'home_page.dart';
 import 'schedule_page.dart';
+// import 'assignments_page.dart';
+import 'course_player_page.dart';
 
 class MyCoursesPage extends StatelessWidget {
   const MyCoursesPage({super.key});
@@ -115,7 +117,14 @@ class MyCoursesPage extends StatelessWidget {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 12),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CoursePlayerPage(),
+                            ),
+                          );
+                        },
                         child: const Text("Continue Learning"),
                       ),
                     ),

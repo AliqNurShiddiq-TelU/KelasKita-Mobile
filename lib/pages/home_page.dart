@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'kategori_page.dart';
 import 'package:kelaskita_mobile/widgets/custom_buttom_navbar.dart';
+import 'kategori_page.dart';
 import 'my_courses_page.dart';
 import 'schedule_page.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -24,6 +25,11 @@ class HomePage extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const SchedulePage()),
+            );
+          } else if (i == 4) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
             );
           }
         },
