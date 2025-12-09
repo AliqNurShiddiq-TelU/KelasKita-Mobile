@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'kategori_page.dart';
+import 'kategori_popular.dart';
 import 'package:kelaskita_mobile/widgets/custom_buttom_navbar.dart';
 
 class HomePage extends StatelessWidget {
@@ -160,27 +161,27 @@ class HomePage extends StatelessWidget {
               // CATEGORIES TITLE
               // =======================
               Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    const Text(
-      "Categories",
-      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-    ),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Categories",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
 
-    GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const CategoriesPage()),
-        );
-      },
-      child: const Text(
-        "See All",
-        style: TextStyle(color: Colors.grey),
-      ),
-    ),
-  ],
-),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const CategoriesPage()),
+                    );
+                  },
+                  child: const Text(
+                    "See All",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ],
+            ),
 
 
               const SizedBox(height: 12),
@@ -208,12 +209,27 @@ class HomePage extends StatelessWidget {
               // =======================
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     "Popular Courses",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  Text("See All", style: TextStyle(color: Colors.grey)),
+
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const PopularCoursesPage()),
+                      );
+                    },
+                    child: const Text(
+                      "See All",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
                 ],
               ),
 

@@ -10,7 +10,7 @@ class CategoriesPage extends StatelessWidget {
       backgroundColor: Colors.white,
 
       bottomNavigationBar: CustomBottomNavbar(
-        currentIndex: 1, // Explore tab
+        currentIndex: 0, // Explore tab
         onTap: (i) {},
       ),
 
