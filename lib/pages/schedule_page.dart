@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kelaskita_mobile/widgets/custom_buttom_navbar.dart';
 import 'home_page.dart';
 import 'my_courses_page.dart';
+import 'profile_page.dart';
 
 class SchedulePage extends StatelessWidget {
   const SchedulePage({super.key});
@@ -11,7 +12,7 @@ class SchedulePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: CustomBottomNavbar(
-        currentIndex: 3, // Schedule tab
+        currentIndex: 3, 
         onTap: (index) {
           if (index == 0) {
             Navigator.pushReplacement(
@@ -23,6 +24,11 @@ class SchedulePage extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (context) => const MyCoursesPage()),
             );
+          } else if (index == 4) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
+            );
           }
         },
       ),
@@ -32,14 +38,14 @@ class SchedulePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // HEADER
+              
               const Text(
                 "Live Schedule",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
 
-              // UPCOMING SESSION
+
               _buildSectionTitle("Upcoming Today"),
               _buildScheduleCard(
                 context,
@@ -159,7 +165,6 @@ class SchedulePage extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // DATE BOX
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
@@ -191,7 +196,6 @@ class SchedulePage extends StatelessWidget {
             ),
             const SizedBox(width: 16),
 
-            // INFO
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,7 +225,6 @@ class SchedulePage extends StatelessWidget {
               ),
             ),
 
-            // ARROW
             Icon(
               Icons.arrow_forward_ios,
               size: 16,
