@@ -4,6 +4,9 @@ import 'kategori_page.dart';
 import 'my_courses_page.dart';
 import 'schedule_page.dart';
 import 'profile_page.dart';
+import 'course_detail_page.dart';
+import 'module_detail_page.dart';
+import 'modules_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -13,7 +16,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      bottomNavigationBar: CustomBottomNavbar(
+      bottomNavigationBar: custombottomnavbar(
         currentIndex: 0,
         onTap: (i) {
           if (i == 2) {
@@ -41,9 +44,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // =======================
-              // HEADER
-              // =======================
+              // ===================== HEADER =====================
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -79,9 +80,7 @@ class HomePage extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // =======================
-              // SEARCH BAR
-              // =======================
+              // ===================== SEARCH BAR =====================
               Container(
                 height: 50,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -106,9 +105,7 @@ class HomePage extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // =======================
-              // BANNER (AUTO HEIGHT)
-              // =======================
+              // ===================== BANNER =====================
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -128,7 +125,7 @@ class HomePage extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.25),
+                        color: Colors.white24,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Text(
@@ -178,9 +175,7 @@ class HomePage extends StatelessWidget {
 
               const SizedBox(height: 25),
 
-              // =======================
-              // CATEGORIES TITLE
-              // =======================
+              // ===================== CATEGORIES =====================
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -208,9 +203,6 @@ class HomePage extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              // =======================
-              // CATEGORY CHIPS
-              // =======================
               SizedBox(
                 height: 40,
                 child: ListView(
@@ -226,9 +218,7 @@ class HomePage extends StatelessWidget {
 
               const SizedBox(height: 25),
 
-              // =======================
-              // POPULAR COURSES TITLE
-              // =======================
+              // ===================== POPULAR COURSES =====================
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
@@ -242,29 +232,67 @@ class HomePage extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              // =======================
-              // POPULAR COURSE LIST (HORIZONTAL)
-              // =======================
               SizedBox(
                 height: 250,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    _courseCard(
-                      imageUrl: "https://picsum.photos/300/200",
-                      title: "UI/UX Design Masterclass",
-                      mentor: "Sarah Jenkins",
-                      rating: 4.9,
-                      students: 5400,
-                      price: "\$24.99",
+                    // COURSE 1
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => CourseDetailPage(
+                              title: "UI/UX Design Masterclass",
+                              mentor: "Sarah Jenkins",
+                              imageUrl: "https://picsum.photos/300/200",
+                              rating: 4.9,
+                              students: 5400,
+                              price: 249900,
+                              description:
+                                  "Kursus ini membahas UI/UX dari dasar hingga mahir menggunakan studi kasus real.",
+                            ),
+                          ),
+                        );
+                      },
+                      child: _courseCard(
+                        imageUrl: "https://picsum.photos/300/200",
+                        title: "UI/UX Design Masterclass",
+                        mentor: "Sarah Jenkins",
+                        rating: 4.9,
+                        students: 5400,
+                        price: "\$24.99",
+                      ),
                     ),
-                    _courseCard(
-                      imageUrl: "https://picsum.photos/301/200",
-                      title: "Python for Data Science",
-                      mentor: "Jose Portilla",
-                      rating: 4.8,
-                      students: 18200,
-                      price: "\$18.99",
+
+                    // COURSE 2
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => CourseDetailPage(
+                              title: "Python for Data Science",
+                              mentor: "Jose Portilla",
+                              imageUrl: "https://picsum.photos/301/200",
+                              rating: 4.8,
+                              students: 18200,
+                              price: 189900,
+                              description:
+                                  "Belajar Python, NumPy, Pandas, dan Machine Learning dari awal.",
+                            ),
+                          ),
+                        );
+                      },
+                      child: _courseCard(
+                        imageUrl: "https://picsum.photos/301/200",
+                        title: "Python for Data Science",
+                        mentor: "Jose Portilla",
+                        rating: 4.8,
+                        students: 18200,
+                        price: "\$18.99",
+                      ),
                     ),
                   ],
                 ),
@@ -275,154 +303,178 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _categoryChip(String text, {bool isActive = false}) {
-  return Container(
-    margin: const EdgeInsets.only(right: 10),
-    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-    decoration: BoxDecoration(
-      color: isActive ? const Color(0xFF1565C0) : Colors.white,
-      borderRadius: BorderRadius.circular(20),
-      border: Border.all(color: const Color(0xFF1565C0)),
-    ),
-    child: Text(
-      text,
-      style: TextStyle(
-        color: isActive ? Colors.white : const Color(0xFF1565C0),
-        fontWeight: FontWeight.w600,
-      ),
-    ),
-  );
-}
-
-Widget _courseCard({
-  required String imageUrl,
-  required String title,
-  required String mentor,
-  required double rating,
-  required int students,
-  required String price,
-}) {
-  return Container(
-    width: 220,
-    margin: const EdgeInsets.only(right: 15),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(24),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.05),
-          blurRadius: 8,
-          offset: const Offset(0, 3),
+  Widget custombottomnavbar({
+    required int currentIndex,
+    required Function(int) onTap,
+  }) {
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: onTap,
+      type: BottomNavigationBarType.fixed,
+      selectedItemColor: Color(0xFF1565C0),
+      unselectedItemColor: Colors.grey,
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+        BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Explore"),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.play_circle),
+          label: "My Courses",
         ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.calendar_today),
+          label: "Schedule",
+        ),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
       ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // IMAGE + PRICE BADGE
-        Stack(
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(24),
-                topRight: Radius.circular(24),
-              ),
-              child: Image.network(
-                imageUrl,
-                height: 120,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
+    );
+  }
 
-            // PRICE BADGE
-            Positioned(
-              top: 10,
-              right: 10,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1565C0),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  price,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-            ),
-          ],
+  // ====================== WIDGETS LAINNYA ======================
+
+  Widget _categoryChip(String text, {bool isActive = false}) {
+    return Container(
+      margin: const EdgeInsets.only(right: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+      decoration: BoxDecoration(
+        color: isActive ? const Color(0xFF1565C0) : Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFF1565C0)),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: isActive ? Colors.white : const Color(0xFF1565C0),
+          fontWeight: FontWeight.w600,
         ),
+      ),
+    );
+  }
 
-        // CONTENT BELOW IMAGE
-        Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _courseCard({
+    required String imageUrl,
+    required String title,
+    required String mentor,
+    required double rating,
+    required int students,
+    required String price,
+  }) {
+    return Container(
+      width: 220,
+      margin: const EdgeInsets.only(right: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 8,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // IMAGE + PRICE BADGE
+          Stack(
             children: [
-              // TITLE
-              Text(
-                title,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
+                child: Image.network(
+                  imageUrl,
+                  height: 120,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
               ),
 
-              const SizedBox(height: 5),
-
-              // MENTOR NAME
-              Row(
-                children: [
-                  const Icon(
-                    Icons.person_outline,
-                    size: 14,
-                    color: Colors.grey,
+              Positioned(
+                top: 10,
+                right: 10,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
                   ),
-                  const SizedBox(width: 5),
-                  Text(
-                    mentor,
-                    style: const TextStyle(fontSize: 13, color: Colors.grey),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1565C0),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                ],
-              ),
-
-              const SizedBox(height: 6),
-
-              // RATING + STUDENTS
-              Row(
-                children: [
-                  const Icon(Icons.star, color: Colors.amber, size: 16),
-                  const SizedBox(width: 4),
-                  Text(
-                    rating.toString(),
+                  child: Text(
+                    price,
                     style: const TextStyle(
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 13,
+                      fontSize: 12,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    "|  $students students",
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
-        ),
-      ],
-    ),
-  );
+
+          // CONTENT BELOW IMAGE
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+
+                const SizedBox(height: 5),
+
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.person_outline,
+                      size: 14,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      mentor,
+                      style: const TextStyle(fontSize: 13, color: Colors.grey),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 6),
+
+                Row(
+                  children: [
+                    const Icon(Icons.star, size: 16, color: Colors.amber),
+                    const SizedBox(width: 4),
+                    Text(
+                      rating.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      "|  $students students",
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
