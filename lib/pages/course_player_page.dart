@@ -10,7 +10,7 @@ class CoursePlayerPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // VIDEO PLAYER PLACEHOLDER
+            
             Stack(
               children: [
                 Container(
@@ -36,13 +36,13 @@ class CoursePlayerPage extends StatelessWidget {
               ],
             ),
 
-            // CONTENT
+            
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // TITLE SECTION
+                    
                     Padding(
                       padding: const EdgeInsets.all(20),
                       child: Column(
@@ -79,7 +79,7 @@ class CoursePlayerPage extends StatelessWidget {
 
                     const Divider(height: 1),
 
-                    // TABS
+                    
                     DefaultTabController(
                       length: 2,
                       child: Column(
@@ -94,10 +94,10 @@ class CoursePlayerPage extends StatelessWidget {
                             ],
                           ),
                           SizedBox(
-                            height: 400, // Fixed height for simplicity
+                            height: 400, 
                             child: TabBarView(
                               children: [
-                                // LESSONS LIST
+                                
                                 ListView(
                                   padding: const EdgeInsets.all(20),
                                   children: [
@@ -126,7 +126,7 @@ class CoursePlayerPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                // ABOUT TAB
+
                                 const Padding(
                                   padding: EdgeInsets.all(20),
                                   child: Text(

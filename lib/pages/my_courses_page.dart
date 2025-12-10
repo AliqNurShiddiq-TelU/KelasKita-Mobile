@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kelaskita_mobile/widgets/custom_buttom_navbar.dart';
 import 'home_page.dart';
 import 'schedule_page.dart';
-// import 'assignments_page.dart';
+import 'profile_page.dart';
 import 'course_player_page.dart';
 
 class MyCoursesPage extends StatelessWidget {
@@ -13,7 +13,7 @@ class MyCoursesPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: CustomBottomNavbar(
-        currentIndex: 2, // My Courses tab
+        currentIndex: 2,
         onTap: (index) {
           if (index == 0) {
             Navigator.pushReplacement(
@@ -25,6 +25,11 @@ class MyCoursesPage extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (context) => const SchedulePage()),
             );
+          } else if (index == 4) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
+            );
           }
         },
       ),
@@ -34,14 +39,12 @@ class MyCoursesPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // HEADER
               const Text(
                 "My Learning",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
 
-              // CONTINUE LEARNING HERO
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -134,14 +137,14 @@ class MyCoursesPage extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              // COURSE LIST TITLE
+              
               const Text(
                 "Enrolled Courses",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 15),
 
-              // COURSE LIST
+            
               _buildCourseItem(
                 title: "Python for Data Science",
                 author: "Jose Portilla",

@@ -3,6 +3,7 @@ import 'package:kelaskita_mobile/widgets/custom_buttom_navbar.dart';
 import 'home_page.dart';
 import 'my_courses_page.dart';
 import 'schedule_page.dart';
+import 'profile_page.dart';
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});
@@ -29,6 +30,11 @@ class CategoriesPage extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const SchedulePage()),
+            );
+          } else if (i == 4) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
             );
           }
         },
