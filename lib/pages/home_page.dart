@@ -65,33 +65,36 @@ class HomePage extends StatelessWidget {
               // SEARCH BAR
               // =======================
               Container(
-                height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric (horizontal: 16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F4F9),
+                  color: const Color(0xFFF5F5F5),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
-                  children: const [
-                    Icon(Icons.search, color: Colors.grey),
-                    SizedBox(width: 10),
+                  children: [
+                    const Icon(Icons.search, color: Colors.grey),
+                    const SizedBox(width:10),
                     Expanded(
-                      child: Text(
-                        "Search for courses...",
-                        style: TextStyle(color: Colors.grey),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Search for courses",
+                          border: InputBorder.none,
+                        ),
+                        onChanged: (value) {
+                          print("Searching for: $value");
+                        },
                       ),
-                    ),
-                    Icon(Icons.settings_outlined, color: Colors.grey),
+                    ), 
+                    const Icon(Icons.settings_outlined, color: Colors.grey), 
                   ],
-                ),
               ),
-
-              const SizedBox(height: 20),
-
+            ),
               // =======================
               // BANNER (AUTO HEIGHT)
               // =======================
               Container(
+                width: double.infinity,
+                margin: const EdgeInsets.symmetric(vertical: 25),
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24),
@@ -155,9 +158,8 @@ class HomePage extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 25),
+              const SizedBox(height: 30),
 
-              // =======================
               // CATEGORIES TITLE
               // =======================
               Row(
@@ -183,10 +185,8 @@ class HomePage extends StatelessWidget {
               ],
             ),
 
-
               const SizedBox(height: 12),
 
-              // =======================
               // CATEGORY CHIPS
               // =======================
               SizedBox(
@@ -239,7 +239,7 @@ class HomePage extends StatelessWidget {
               // POPULAR COURSE LIST (HORIZONTAL)
               // =======================
               SizedBox(
-                height: 250,
+                height: 260,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
