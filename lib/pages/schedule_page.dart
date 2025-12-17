@@ -5,46 +5,56 @@ import 'my_courses_page.dart';
 import 'profile_page.dart';
 
 class SchedulePage extends StatelessWidget {
-  const SchedulePage({super.key});
+  // 1. Tambahkan variabel themeNotifier
+  final ValueNotifier<ThemeMode> themeNotifier;
+
+  // 2. Update Constructor
+  const SchedulePage({super.key, required this.themeNotifier});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // Gunakan warna background dari tema agar berubah saat dark mode
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+
+      // Navigasi Bawah
       bottomNavigationBar: CustomBottomNavbar(
         currentIndex: 3, 
+        themeNotifier: themeNotifier, // Kirim notifier ke navbar
         onTap: (index) {
+          if (index == 3) return; // Sudah di halaman ini
+
+          Widget nextPage;
           if (index == 0) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
+            nextPage = HomePage(themeNotifier: themeNotifier);
           } else if (index == 2) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MyCoursesPage()),
-            );
+            nextPage = MyCoursesPage(themeNotifier: themeNotifier);
           } else if (index == 4) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const ProfilePage()),
-            );
+            nextPage = ProfilePage(themeNotifier: themeNotifier);
+          } else {
+            // Default fallback
+            nextPage = HomePage(themeNotifier: themeNotifier);
           }
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => nextPage),
+          );
         },
       ),
+
+      // ISI KONTEN ASLI ANDA
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
               const Text(
                 "Live Schedule",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
-
 
               _buildSectionTitle("Upcoming Today"),
               _buildScheduleCard(
@@ -90,6 +100,7 @@ class SchedulePage extends StatelessWidget {
     );
   }
 
+  // Widget Bantuan (Sama Persis)
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -157,7 +168,7 @@ class SchedulePage extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
+              color: Colors.black.withOpacity(0.03),
               blurRadius: 5,
               offset: const Offset(0, 2),
             ),

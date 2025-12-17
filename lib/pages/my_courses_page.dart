@@ -6,33 +6,45 @@ import 'profile_page.dart';
 import 'course_player_page.dart';
 
 class MyCoursesPage extends StatelessWidget {
-  const MyCoursesPage({super.key});
+  // 1. Tambahkan variabel themeNotifier
+  final ValueNotifier<ThemeMode> themeNotifier;
+
+  // 2. Update Constructor
+  const MyCoursesPage({super.key, required this.themeNotifier});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // Gunakan warna background dari tema agar berubah saat dark mode
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+
+      // Navigasi Bawah
       bottomNavigationBar: CustomBottomNavbar(
-        currentIndex: 2,
+        currentIndex: 2, // Index My Courses
+        themeNotifier: themeNotifier, // Kirim notifier ke navbar
         onTap: (index) {
+          if (index == 2) return; // Sudah di halaman ini
+
+          Widget nextPage;
           if (index == 0) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
+            nextPage = HomePage(themeNotifier: themeNotifier);
           } else if (index == 3) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const SchedulePage()),
-            );
+            nextPage = SchedulePage(themeNotifier: themeNotifier);
           } else if (index == 4) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const ProfilePage()),
-            );
+            nextPage = ProfilePage(themeNotifier: themeNotifier);
+          } else {
+            // Default fallback
+            nextPage = HomePage(themeNotifier: themeNotifier);
           }
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => nextPage),
+          );
         },
       ),
+
+      // ISI KONTEN ASLI ANDA
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -45,6 +57,7 @@ class MyCoursesPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
+              // Banner "Continue Watching"
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -52,7 +65,7 @@ class MyCoursesPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF1565C0).withValues(alpha: 0.3),
+                      color: const Color(0xFF1565C0).withOpacity(0.3),
                       blurRadius: 10,
                       offset: const Offset(0, 5),
                     ),
@@ -69,7 +82,7 @@ class MyCoursesPage extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.2),
+                            color: Colors.white.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Text(
@@ -101,7 +114,7 @@ class MyCoursesPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     LinearProgressIndicator(
                       value: 0.45,
-                      backgroundColor: Colors.white.withValues(alpha: 0.2),
+                      backgroundColor: Colors.white.withOpacity(0.2),
                       valueColor: const AlwaysStoppedAnimation<Color>(
                         Colors.white,
                       ),
@@ -137,14 +150,13 @@ class MyCoursesPage extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              
               const Text(
                 "Enrolled Courses",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 15),
 
-            
+              // Daftar Kursus
               _buildCourseItem(
                 title: "Python for Data Science",
                 author: "Jose Portilla",
@@ -170,6 +182,7 @@ class MyCoursesPage extends StatelessWidget {
     );
   }
 
+  // Widget Bantuan (Sama Persis)
   Widget _buildCourseItem({
     required String title,
     required String author,
@@ -185,7 +198,7 @@ class MyCoursesPage extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
+            color: Colors.black.withOpacity(0.03),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -212,6 +225,7 @@ class MyCoursesPage extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
+                    color: Colors.black, // Paksa hitam agar terbaca di card putih
                   ),
                 ),
                 const SizedBox(height: 4),

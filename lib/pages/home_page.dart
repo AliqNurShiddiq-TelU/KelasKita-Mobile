@@ -5,46 +5,56 @@ import 'my_courses_page.dart';
 import 'schedule_page.dart';
 import 'profile_page.dart';
 import 'course_detail_page.dart';
-import 'module_detail_page.dart';
-import 'modules_page.dart';
+import 'settings_screen.dart'; // Import Settings
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  // Variabel untuk mengontrol tema
+  final ValueNotifier<ThemeMode> themeNotifier;
+
+  // Constructor wajib menerima themeNotifier
+  const HomePage({super.key, required this.themeNotifier});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // Gunakan warna background dari tema agar berubah saat dark mode
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
-      bottomNavigationBar: custombottomnavbar(
+      // Navigasi Bawah
+      bottomNavigationBar: CustomBottomNavbar(
         currentIndex: 0,
+        themeNotifier: themeNotifier, // Penting: Kirim notifier ke navbar
         onTap: (i) {
+          if (i == 0) return; // Sedang di Home
+
+          Widget nextPage;
+          // Tentukan halaman tujuan dan kirim themeNotifier
           if (i == 2) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MyCoursesPage()),
-            );
+            nextPage = MyCoursesPage(themeNotifier: themeNotifier);
           } else if (i == 3) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const SchedulePage()),
-            );
+            nextPage = SchedulePage(themeNotifier: themeNotifier);
           } else if (i == 4) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const ProfilePage()),
-            );
+            nextPage = ProfilePage(themeNotifier: themeNotifier);
+          } else {
+            // Ke Categories/Explore
+            nextPage = CategoriesPage(themeNotifier: themeNotifier);
           }
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => nextPage),
+          );
         },
       ),
 
+      // Isi Halaman
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ===================== HEADER =====================
+              // ===================== HEADER (Profil & Notif) =====================
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -80,32 +90,49 @@ class HomePage extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // ===================== SEARCH BAR =====================
+              // ===================== SEARCH BAR & SETTINGS =====================
               Container(
                 height: 50,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F4F9),
+                  color: const Color(0xFFF1F4F9), // Warna search bar
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
-                  children: const [
-                    Icon(Icons.search, color: Colors.grey),
-                    SizedBox(width: 10),
-                    Expanded(
+                  children: [
+                    const Icon(Icons.search, color: Colors.grey),
+                    const SizedBox(width: 10),
+                    const Expanded(
                       child: Text(
                         "Search for courses...",
                         style: TextStyle(color: Colors.grey),
                       ),
                     ),
-                    Icon(Icons.settings_outlined, color: Colors.grey),
+                    
+                    // --- PERBAIKAN TOMBOL SETTINGS ---
+                    // Menggunakan IconButton agar bisa diklik
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      icon: const Icon(Icons.settings_outlined, color: Colors.grey),
+                      onPressed: () {
+                         // Navigasi ke SettingsScreen membawa themeNotifier
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SettingsScreen(themeNotifier: themeNotifier),
+                          ),
+                        );
+                      },
+                    ),
+                    // --------------------------------
                   ],
                 ),
               ),
 
               const SizedBox(height: 20),
 
-              // ===================== BANNER =====================
+              // ===================== BANNER BIRU =====================
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -159,7 +186,7 @@ class HomePage extends StatelessWidget {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          foregroundColor: Color(0xFF1565C0),
+                          foregroundColor: const Color(0xFF1565C0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -186,10 +213,11 @@ class HomePage extends StatelessWidget {
 
                   GestureDetector(
                     onTap: () {
+                      // Navigasi ke CategoriesPage membawa themeNotifier
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => const CategoriesPage(),
+                          builder: (_) => CategoriesPage(themeNotifier: themeNotifier),
                         ),
                       );
                     },
@@ -304,33 +332,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget custombottomnavbar({
-    required int currentIndex,
-    required Function(int) onTap,
-  }) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: onTap,
-      type: BottomNavigationBarType.fixed,
-      selectedItemColor: Color(0xFF1565C0),
-      unselectedItemColor: Colors.grey,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-        BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Explore"),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.play_circle),
-          label: "My Courses",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_today),
-          label: "Schedule",
-        ),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-      ],
-    );
-  }
-
-  // ====================== WIDGETS LAINNYA ======================
+  // ====================== WIDGET BANTUAN (Kodingan Asli Anda) ======================
 
   Widget _categoryChip(String text, {bool isActive = false}) {
     return Container(
@@ -365,11 +367,11 @@ class HomePage extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 8,
-            offset: const Offset(0, 3),
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -430,6 +432,7 @@ class HomePage extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
+                    color: Colors.black, 
                   ),
                 ),
 
@@ -461,6 +464,7 @@ class HomePage extends StatelessWidget {
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
+                        color: Colors.black, 
                       ),
                     ),
                     const SizedBox(width: 8),
